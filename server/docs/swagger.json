@@ -1,0 +1,498 @@
+{
+    "openapi": "3.0.3",
+    "info" : {
+        "title": "API Documentation - Chapter 8 - Binar FSW",
+        "description": "This was an API documentation for binar FSW",
+        "termsOfService": "https://github.com/kisbayu",
+        "contact": {
+            "name": "Kisbayu Adji",
+            "url": "https://github.com/kisbayu",
+            "email": "kisbayu.k.a@email.com"
+        },
+        "license": {
+            "name": "Node JS",
+            "url": "https://github.com/nodejs/node/blob/master/LICENSE"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Development Server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "player",
+            "description": "Player CRUD operation"
+        }
+    ],
+    "paths" :{
+        "/api/v1/players/":{
+            "post":{
+                "tags":["player"],
+                "summary": "Create New Player",
+                "operationID": "Create Player",
+                "requestBody":{
+                    "description":"Create New Player",
+                    "content":{
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                              "$ref": "#/components/schemas/create_player_body"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/create_player_body"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201": {
+                        "description": "New Player Created, Operation Success",
+                        "content":{
+                            "application/json":{
+                             "schema":{
+                                 "type": "object",
+                                 "properties": { 
+                                     "message": {
+                                         "type" : "string"
+                                     },
+                                     "data" :{
+                                         "$ref": "#/components/schemas/Players"
+                                     }
+                                 }
+                              }   
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Operation Error",
+                        "content": {
+                            "application/json" :{
+                                "schema" : {
+                                    "type" : "object",
+                                    "properties": {
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json" :{
+                                "schema" : {
+                                    "type" : "object",
+                                    "properties": {
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags": ["player"],
+                "summary": "Get all player",
+                "operationID": "Get All Players",
+                "description": "Get All Player from Database",
+                "responses":{
+                    "200":{
+                        "description": "Get All Player Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "data":{
+                                            "type": "array",
+                                            "items":{
+                                                "$ref": "#/components/schemas/Players"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Operation Error",
+                        "content": {
+                            "application/json" :{
+                                "schema" : {
+                                    "type" : "object",
+                                    "properties": {
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/players/{id}":{
+            "get":{
+                "tags":["player"],
+                "summary":"Get Player by ID",
+                "operationID":"Search ID",
+                "description":"Get Player by ID",
+                "parameters":[
+                    {
+                    "name": "id",
+                    "in": "path",
+                    "description": "player ID",
+                    "required": true,
+                    "schema":{
+                        "type":"integer",
+                        "example": 1
+                    }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Get Player by ID Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+
+                                        },
+                                        "data":{
+                                            "$ref": "#/components/schemas/Players"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "No Player Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "tags":["player"],
+                "summary":"Update Player by ID",
+                "operationID": "Update Player",
+                "description": "Update Player by ID",
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "player ID",
+                        "required": true,
+                        "schema":{
+                            "type":"integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description":"Input New Data",
+                    "content":{
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                              "$ref": "#/components/schemas/update_player_body"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                              "$ref": "#/components/schemas/update_player_body"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"Update Player by ID Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        },
+                                        "data":{
+                                            "$ref":"#/components/schemas/Players"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "No Player Found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Failed To Update",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "tags":["player"],
+                "summary":"Delete Player by ID",
+                "operationID": "Delete Player",
+                "description": "Delete Player by ID",
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "player ID",
+                        "required": true,
+                        "schema":{
+                            "type":"integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Player Data Deleted, Operation Successful",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Player Data Deleted, Operation Successful",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/players/exp/{id}":{
+            "post":{
+                "tags":["player"],
+                "summary":"Update Player Experience",
+                "operationID":"Update Exp",
+                "description":"Update Player Experience",
+                "parameters":[
+                    {
+                    "name": "id",
+                    "in": "path",
+                    "description": "player ID",
+                    "required": true,
+                    "schema":{
+                        "type":"integer",
+                        "example": 1
+                    }
+                    }
+                ],
+                "requestBody":{
+                    "description":"Input New Data",
+                    "content":{
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/update_player_experience"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/update_player_experience"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"Player Experience Updated, Operation Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Failed",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+        "schemas":{
+            "Players":{
+                "require": ["username","email","password"],
+                "type": "object",
+                "properties": {
+                    "id":{
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "username":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string"
+                    },
+                    "password":{
+                        "type": "string"
+                    },
+                    "experience":{
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "lvl":{
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                }
+            },
+            "create_player_body":{
+                "required" : ["username", "email", "password"],
+                "type": "object",
+                "properties": {
+                    "username":{
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email":{
+                        "type": "string",
+                        "example": "johndoe@email.com"
+                    },
+                    "password":{
+                        "type": "string"
+                    },
+                    "experience":{
+                        "type": "integer",
+                        "format" : "int64"
+                    }
+                }
+            },
+            "update_player_body":{
+                "type":"object",
+                "properties":{
+                    "username":{
+                        "type": "string",
+                        "example":"John Doe"
+                    },
+                    "email":{
+                        "type":"string",
+                        "example":"johndoe@email.com"
+                    },
+                    "password":{
+                        "type":"string"
+                    },
+                    "experience":{
+                        "type":"integer",
+                        "format":"int64"
+                    }
+                }
+            },
+            "update_player_experience":{
+                "type":"object",
+                "required":["exp"],
+                "properties":{
+                    "exp":{
+                        "type":"integer",
+                        "format":"int64",
+                        "example":12345
+                    }
+                }
+            }
+        }
+    }
+}
